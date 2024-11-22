@@ -1,5 +1,6 @@
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -9,15 +10,13 @@ public class ContainsDuplicate {
 
     }
     public boolean containsDuplicate(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
+        HashSet<Integer> set = new HashSet<>();
 
-        for (int i : nums) {
-            map.put(i, map.getOrDefault(i, 0) + 1);
-        }
-        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            if (entry.getValue() > 1) {
+        for (int num : nums) {
+            if (set.contains(num)) {
                 return true;
             }
+            set.add(num);
         }
         return false;
     }
