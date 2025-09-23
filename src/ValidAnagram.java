@@ -24,6 +24,7 @@ public class ValidAnagram {
         return true;
     }
 
+    // By Sorting Array
     public static boolean isAnagram2(String s, String t) {
         char[] sArray = s.toCharArray();
         char[] tArray = t.toCharArray();

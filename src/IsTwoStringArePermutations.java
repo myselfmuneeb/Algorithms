@@ -4,42 +4,28 @@ import java.util.Map;
 public class IsTwoStringArePermutations {
 
     public static void main(String[] args) {
-        System.out.println(isPermutation("abba", "baaz"));
+        System.out.println(isPermutation("abba", "baab"));
     }
+        public static boolean isPermutation(String s1, String s2) {
+            if (s1 == null || s2 == null) return false;
+            if (s1.length() != s2.length()) return false;
 
-    // abc => bck
-    // [a=1, b=1, c=1] -> [a=1, b=0, c=0]
+            Map<Character, Integer> charCount = new HashMap<>();
 
-    public static boolean isPermutation(String s1, String s2) {
-        // write your logic here
-        if(s1.length() != s2.length())
-            return false;
-        Map<Character, Integer> charCount = new HashMap<>();
-        // [a=1]
-        for(char s1Char: s1.toCharArray()) {
-//            charCount.put(s1Char, charCount.getOrDefault(s1Char, 0) + 1);
-            if(!charCount.containsKey(s1Char)) {
-                charCount.put(s1Char, 1);
-            } else {
-                charCount.put(s1Char, charCount.get(s1Char) + 1);
+            // Count s1
+            for (char c : s1.toCharArray()) {
+                charCount.put(c, charCount.getOrDefault(c, 0) + 1);
             }
-        }
-        // [a=1, b=1, c=1]
-        // abc, bba
-        for(char s2Char: s2.toCharArray()) {
-            if(!charCount.containsKey(s2Char)) {
-                return false;
+
+            // Subtract with s2 and early-exit if any goes negative
+            for (char c : s2.toCharArray()) {
+                Integer cnt = charCount.get(c);
+                if (cnt == null || cnt == 0) return false;
+                charCount.put(c, cnt - 1);
             }
-            charCount.put(s2Char, charCount.get(s2Char) - 1);
+
+
+            for (int v : charCount.values()) if (v != 0) return false;
+            return true;
         }
-
-        for(char key: charCount.keySet()) {
-            if(charCount.get(key) != 0) {
-                return false;
-            }
-        }
-
-
-        return true;
-    }
 }
